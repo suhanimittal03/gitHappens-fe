@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Network, Download, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
-import { useCallback } from "react";
+import { Download } from "lucide-react";
+import { useCallback, useMemo } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -14,175 +14,125 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
-// Mock data for dependency graph
-const initialNodes: Node[] = [
-  {
-    id: "module-a",
-    type: "default",
-    position: { x: 250, y: 0 },
-    data: { label: "Module A (Changed)" },
-    style: {
-      background: "hsl(var(--primary))",
-      color: "white",
-      border: "2px solid hsl(var(--primary))",
-      borderRadius: "8px",
-      padding: "10px",
-      fontWeight: "bold",
-    },
-  },
-  {
-    id: "module-b",
-    type: "default",
-    position: { x: 100, y: 150 },
-    data: { label: "Module B" },
-    style: {
-      background: "hsl(var(--warning))",
-      color: "white",
-      border: "2px solid hsl(var(--warning))",
-      borderRadius: "8px",
-      padding: "10px",
-    },
-  },
-  {
-    id: "module-c",
-    type: "default",
-    position: { x: 400, y: 150 },
-    data: { label: "Module C" },
-    style: {
-      background: "hsl(var(--accent))",
-      color: "white",
-      border: "2px solid hsl(var(--accent))",
-      borderRadius: "8px",
-      padding: "10px",
-    },
-  },
-  {
-    id: "service-x",
-    type: "default",
-    position: { x: 0, y: 300 },
-    data: { label: "Service X" },
-    style: {
-      background: "hsl(var(--card))",
-      color: "hsl(var(--foreground))",
-      border: "2px solid hsl(var(--border))",
-      borderRadius: "8px",
-      padding: "10px",
-    },
-  },
-  {
-    id: "service-y",
-    type: "default",
-    position: { x: 200, y: 300 },
-    data: { label: "Service Y" },
-    style: {
-      background: "hsl(var(--card))",
-      color: "hsl(var(--foreground))",
-      border: "2px solid hsl(var(--border))",
-      borderRadius: "8px",
-      padding: "10px",
-    },
-  },
-  {
-    id: "component-1",
-    type: "default",
-    position: { x: 400, y: 300 },
-    data: { label: "Component 1" },
-    style: {
-      background: "hsl(var(--card))",
-      color: "hsl(var(--foreground))",
-      border: "2px solid hsl(var(--border))",
-      borderRadius: "8px",
-      padding: "10px",
-    },
-  },
-  {
-    id: "component-2",
-    type: "default",
-    position: { x: 550, y: 300 },
-    data: { label: "Component 2" },
-    style: {
-      background: "hsl(var(--card))",
-      color: "hsl(var(--foreground))",
-      border: "2px solid hsl(var(--border))",
-      borderRadius: "8px",
-      padding: "10px",
-    },
-  },
-  {
-    id: "database",
-    type: "default",
-    position: { x: 250, y: 450 },
-    data: { label: "Database" },
-    style: {
-      background: "hsl(var(--muted))",
-      color: "hsl(var(--foreground))",
-      border: "2px solid hsl(var(--border))",
-      borderRadius: "8px",
-      padding: "10px",
-    },
-  },
-];
+// Mock data structure
+const mockGraphData = {
+  nodes: [
+    { id: "module-a", label: "Module A", type: "changed", position: { x: 250, y: 0 } },
+    { id: "module-b", label: "Module B", type: "direct", position: { x: 100, y: 150 } },
+    { id: "module-c", label: "Module C", type: "indirect", position: { x: 400, y: 150 } },
+    { id: "service-x", label: "Service X", type: "service", position: { x: 0, y: 300 } },
+    { id: "service-y", label: "Service Y", type: "service", position: { x: 200, y: 300 } },
+    { id: "component-1", label: "Component 1", type: "ui", position: { x: 400, y: 300 } },
+    { id: "component-2", label: "Component 2", type: "ui", position: { x: 550, y: 300 } },
+    { id: "database", label: "Database", type: "database", position: { x: 250, y: 450 } },
+  ],
+  edges: [
+    { source: "module-a", target: "module-b", label: "depends on", type: "changed" },
+    { source: "module-a", target: "module-c", label: "depends on", type: "changed" },
+    { source: "module-b", target: "service-x", label: "calls", type: "direct" },
+    { source: "module-b", target: "service-y", label: "calls", type: "direct" },
+    { source: "module-c", target: "component-1", label: "renders", type: "indirect" },
+    { source: "module-c", target: "component-2", label: "renders", type: "indirect" },
+    { source: "service-x", target: "database", label: "reads from", type: "downstream" },
+    { source: "service-y", target: "database", label: "writes to", type: "downstream" },
+    { source: "component-1", target: "database", label: "queries", type: "downstream" },
+  ],
+};
 
-const initialEdges: Edge[] = [
-  {
-    id: "e-a-b",
-    source: "module-a",
-    target: "module-b",
+// Node type styling configuration
+const nodeTypeStyles = {
+  changed: {
+    background: "hsl(var(--primary))",
+    color: "hsl(var(--primary-foreground))",
+    border: "2px solid hsl(var(--primary))",
+    fontWeight: "bold",
+  },
+  direct: {
+    background: "hsl(var(--warning))",
+    color: "hsl(var(--warning-foreground))",
+    border: "2px solid hsl(var(--warning))",
+  },
+  indirect: {
+    background: "hsl(var(--accent))",
+    color: "hsl(var(--accent-foreground))",
+    border: "2px solid hsl(var(--accent))",
+  },
+  service: {
+    background: "hsl(var(--card))",
+    color: "hsl(var(--foreground))",
+    border: "2px solid hsl(var(--border))",
+  },
+  ui: {
+    background: "hsl(var(--card))",
+    color: "hsl(var(--foreground))",
+    border: "2px solid hsl(var(--border))",
+  },
+  database: {
+    background: "hsl(var(--muted))",
+    color: "hsl(var(--foreground))",
+    border: "2px solid hsl(var(--border))",
+  },
+};
+
+// Edge type styling configuration
+const edgeTypeStyles = {
+  changed: {
+    stroke: "hsl(var(--primary))",
+    strokeWidth: 2,
     animated: true,
-    style: { stroke: "hsl(var(--primary))", strokeWidth: 2 },
   },
-  {
-    id: "e-a-c",
-    source: "module-a",
-    target: "module-c",
-    animated: true,
-    style: { stroke: "hsl(var(--primary))", strokeWidth: 2 },
+  direct: {
+    stroke: "hsl(var(--warning))",
+    strokeWidth: 2,
+    animated: false,
   },
-  {
-    id: "e-b-x",
-    source: "module-b",
-    target: "service-x",
-    style: { stroke: "hsl(var(--warning))", strokeWidth: 2 },
+  indirect: {
+    stroke: "hsl(var(--accent))",
+    strokeWidth: 2,
+    animated: false,
   },
-  {
-    id: "e-b-y",
-    source: "module-b",
-    target: "service-y",
-    style: { stroke: "hsl(var(--warning))", strokeWidth: 2 },
+  downstream: {
+    stroke: "hsl(var(--muted-foreground))",
+    strokeWidth: 1,
+    animated: false,
   },
-  {
-    id: "e-c-1",
-    source: "module-c",
-    target: "component-1",
-    style: { stroke: "hsl(var(--accent))", strokeWidth: 2 },
-  },
-  {
-    id: "e-c-2",
-    source: "module-c",
-    target: "component-2",
-    style: { stroke: "hsl(var(--accent))", strokeWidth: 2 },
-  },
-  {
-    id: "e-x-db",
-    source: "service-x",
-    target: "database",
-    style: { stroke: "hsl(var(--muted-foreground))" },
-  },
-  {
-    id: "e-y-db",
-    source: "service-y",
-    target: "database",
-    style: { stroke: "hsl(var(--muted-foreground))" },
-  },
-  {
-    id: "e-1-db",
-    source: "component-1",
-    target: "database",
-    style: { stroke: "hsl(var(--muted-foreground))" },
-  },
-];
+};
+
+// Transform mock data to ReactFlow format
+const transformToReactFlow = (data: typeof mockGraphData) => {
+  const nodes: Node[] = data.nodes.map((node) => ({
+    id: node.id,
+    type: "default",
+    position: node.position,
+    data: { label: node.label },
+    style: {
+      ...nodeTypeStyles[node.type as keyof typeof nodeTypeStyles],
+      borderRadius: "8px",
+      padding: "10px",
+    },
+  }));
+
+  const edges: Edge[] = data.edges.map((edge, index) => {
+    const edgeStyle = edgeTypeStyles[edge.type as keyof typeof edgeTypeStyles];
+    return {
+      id: `edge-${index}`,
+      source: edge.source,
+      target: edge.target,
+      label: edge.label,
+      style: { stroke: edgeStyle.stroke, strokeWidth: edgeStyle.strokeWidth },
+      animated: edgeStyle.animated,
+    };
+  });
+
+  return { nodes, edges };
+};
 
 const Dependencies = () => {
+  const { nodes: initialNodes, edges: initialEdges } = useMemo(
+    () => transformToReactFlow(mockGraphData),
+    []
+  );
+  
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
@@ -239,10 +189,9 @@ const Dependencies = () => {
               <Controls />
               <MiniMap
                 nodeColor={(node) => {
-                  if (node.id === "module-a") return "hsl(var(--primary))";
-                  if (node.id === "module-b") return "hsl(var(--warning))";
-                  if (node.id === "module-c") return "hsl(var(--accent))";
-                  return "hsl(var(--muted))";
+                  const originalNode = mockGraphData.nodes.find(n => n.id === node.id);
+                  if (!originalNode) return "hsl(var(--muted))";
+                  return nodeTypeStyles[originalNode.type as keyof typeof nodeTypeStyles].background;
                 }}
                 style={{
                   background: "hsl(var(--card))",

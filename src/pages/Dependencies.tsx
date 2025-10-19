@@ -1,7 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Download } from "lucide-react";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -13,9 +14,10 @@ import {
   type Edge,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import type { DependencyGraphData } from "@/types";
 
-// Mock data structure
-const mockGraphData = {
+// Mock data function - Replace with API call
+const getMockGraphData = (): DependencyGraphData => ({
   nodes: [
     { id: "module-a", label: "Module A", type: "changed", position: { x: 250, y: 0 } },
     { id: "module-b", label: "Module B", type: "direct", position: { x: 100, y: 150 } },
@@ -37,7 +39,7 @@ const mockGraphData = {
     { source: "service-y", target: "database", label: "writes to", type: "downstream" },
     { source: "component-1", target: "database", label: "queries", type: "downstream" },
   ],
-};
+});
 
 // Node type styling configuration
 const nodeTypeStyles = {
@@ -98,8 +100,8 @@ const edgeTypeStyles = {
   },
 };
 
-// Transform mock data to ReactFlow format
-const transformToReactFlow = (data: typeof mockGraphData) => {
+// Transform dependency graph data to ReactFlow format
+const transformToReactFlow = (data: DependencyGraphData) => {
   const nodes: Node[] = data.nodes.map((node) => ({
     id: node.id,
     type: "default",
@@ -128,16 +130,54 @@ const transformToReactFlow = (data: typeof mockGraphData) => {
 };
 
 const Dependencies = () => {
+  const [graphData, setGraphData] = useState<DependencyGraphData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // TODO: Replace with actual API call
+  // Required API endpoint: GET /api/dependencies/graph?moduleId={id}
+  // Response: DependencyGraphData
+  useEffect(() => {
+    const fetchGraphData = async () => {
+      setLoading(true);
+      try {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 800));
+
+        // TODO: Replace with actual API call:
+        // const response = await fetch('/api/dependencies/graph');
+        // const data = await response.json();
+
+        setGraphData(getMockGraphData());
+      } catch (error) {
+        console.error("Failed to fetch graph data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGraphData();
+  }, []);
+
   const { nodes: initialNodes, edges: initialEdges } = useMemo(
-    () => transformToReactFlow(mockGraphData),
-    []
+    () => (graphData ? transformToReactFlow(graphData) : { nodes: [], edges: [] }),
+    [graphData]
   );
-  
+
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  // Update nodes and edges when graph data changes
+  useEffect(() => {
+    if (graphData) {
+      const { nodes: newNodes, edges: newEdges } = transformToReactFlow(graphData);
+      setNodes(newNodes);
+      setEdges(newEdges);
+    }
+  }, [graphData, setNodes, setEdges]);
+
   const handleExport = useCallback(() => {
-    const graphData = { nodes, edges };
+    if (!graphData) return;
+    
     const dataStr = JSON.stringify(graphData, null, 2);
     const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`;
     const exportFileDefaultName = "dependency-graph.json";
@@ -146,7 +186,7 @@ const Dependencies = () => {
     linkElement.setAttribute("href", dataUri);
     linkElement.setAttribute("download", exportFileDefaultName);
     linkElement.click();
-  }, [nodes, edges]);
+  }, [graphData]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -178,7 +218,18 @@ const Dependencies = () => {
         {/* Graph Visualization */}
         <Card className="p-0 bg-gradient-card border-border/50 overflow-hidden">
           <div style={{ height: "600px" }}>
-            <ReactFlow
+            {loading ? (
+              <div className="flex items-center justify-center h-full">
+                <Skeleton className="w-full h-full" />
+              </div>
+            ) : nodes.length === 0 ? (
+              <div className="flex items-center justify-center h-full">
+                <p className="text-muted-foreground">
+                  No dependency data available
+                </p>
+              </div>
+            ) : (
+              <ReactFlow
               nodes={nodes}
               edges={edges}
               onNodesChange={onNodesChange}
@@ -187,19 +238,23 @@ const Dependencies = () => {
               attributionPosition="bottom-left"
             >
               <Controls />
-              <MiniMap
-                nodeColor={(node) => {
-                  const originalNode = mockGraphData.nodes.find(n => n.id === node.id);
-                  if (!originalNode) return "hsl(var(--muted))";
-                  return nodeTypeStyles[originalNode.type as keyof typeof nodeTypeStyles].background;
-                }}
-                style={{
-                  background: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                }}
-              />
-              <Background gap={12} size={1} />
-            </ReactFlow>
+                <MiniMap
+                  nodeColor={(node) => {
+                    if (!graphData) return "hsl(var(--muted))";
+                    const originalNode = graphData.nodes.find((n) => n.id === node.id);
+                    if (!originalNode) return "hsl(var(--muted))";
+                    return nodeTypeStyles[
+                      originalNode.type as keyof typeof nodeTypeStyles
+                    ].background;
+                  }}
+                  style={{
+                    background: "hsl(var(--card))",
+                    border: "1px solid hsl(var(--border))",
+                  }}
+                />
+                <Background gap={12} size={1} />
+              </ReactFlow>
+            )}
           </div>
         </Card>
 

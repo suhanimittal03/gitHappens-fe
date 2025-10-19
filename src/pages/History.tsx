@@ -1,61 +1,119 @@
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Clock, Search, Filter, Download } from "lucide-react";
+import type { AnalysisHistoryItem } from "@/types";
+
+// Mock data function - Replace with API call
+const getMockHistoryData = (): AnalysisHistoryItem[] => [
+  {
+    id: "1",
+    module: "Payment Gateway Module",
+    changeType: "API Modification",
+    timestamp: "2024-01-15T14:30:00Z",
+    impact: "High",
+    status: "completed",
+    affectedModules: 12,
+    criticalIssues: 2,
+  },
+  {
+    id: "2",
+    module: "User Authentication Service",
+    changeType: "Business Logic Update",
+    timestamp: "2024-01-15T11:20:00Z",
+    impact: "Medium",
+    status: "in-progress",
+    affectedModules: 7,
+    criticalIssues: 0,
+  },
+  {
+    id: "3",
+    module: "Email Notification Handler",
+    changeType: "Configuration Change",
+    timestamp: "2024-01-14T16:45:00Z",
+    impact: "Low",
+    status: "completed",
+    affectedModules: 3,
+    criticalIssues: 0,
+  },
+  {
+    id: "4",
+    module: "Data Processing Pipeline",
+    changeType: "Database Schema Change",
+    timestamp: "2024-01-14T09:15:00Z",
+    impact: "High",
+    status: "completed",
+    affectedModules: 15,
+    criticalIssues: 3,
+  },
+  {
+    id: "5",
+    module: "API Gateway Configuration",
+    changeType: "Dependency Update",
+    timestamp: "2024-01-13T13:50:00Z",
+    impact: "Medium",
+    status: "completed",
+    affectedModules: 8,
+    criticalIssues: 1,
+  },
+];
 
 const History = () => {
-  const historyData = [
-    {
-      id: 1,
-      module: "Payment Gateway Module",
-      date: "2024-01-15",
-      time: "14:30",
-      user: "John Doe",
-      risk: "high",
-      components: 12,
-      status: "reviewed",
-    },
-    {
-      id: 2,
-      module: "User Authentication Service",
-      date: "2024-01-15",
-      time: "11:20",
-      user: "Jane Smith",
-      risk: "medium",
-      components: 7,
-      status: "pending",
-    },
-    {
-      id: 3,
-      module: "Email Notification Handler",
-      date: "2024-01-14",
-      time: "16:45",
-      user: "Mike Johnson",
-      risk: "low",
-      components: 3,
-      status: "reviewed",
-    },
-    {
-      id: 4,
-      module: "Data Processing Pipeline",
-      date: "2024-01-14",
-      time: "09:15",
-      user: "Sarah Williams",
-      risk: "high",
-      components: 15,
-      status: "reviewed",
-    },
-    {
-      id: 5,
-      module: "API Gateway Configuration",
-      date: "2024-01-13",
-      time: "13:50",
-      user: "David Brown",
-      risk: "medium",
-      components: 8,
-      status: "reviewed",
-    },
-  ];
+  const [historyData, setHistoryData] = useState<AnalysisHistoryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // TODO: Replace with actual API call
+  // Required API endpoint: GET /api/analyses/history?search={query}&limit={limit}
+  // Response: AnalysisHistoryItem[]
+  useEffect(() => {
+    const fetchHistory = async () => {
+      setLoading(true);
+      try {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 800));
+
+        // TODO: Replace with actual API call:
+        // const response = await fetch(`/api/analyses/history?search=${searchQuery}`);
+        // const data = await response.json();
+
+        setHistoryData(getMockHistoryData());
+      } catch (error) {
+        console.error("Failed to fetch history:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHistory();
+  }, [searchQuery]);
+
+  const formatTimestamp = (timestamp: string) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffInHours = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60 * 60)
+    );
+
+    if (diffInHours < 24) {
+      return `${diffInHours} hours ago`;
+    } else {
+      const diffInDays = Math.floor(diffInHours / 24);
+      return `${diffInDays} day${diffInDays > 1 ? "s" : ""} ago`;
+    }
+  };
+
+  const handleExport = () => {
+    // TODO: Implement export functionality
+    // Required API endpoint: GET /api/analyses/export?format=csv
+    console.log("Export functionality to be implemented");
+  };
+
+  const filteredHistory = historyData.filter((item) =>
+    item.module.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -75,15 +133,17 @@ const History = () => {
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input
-                placeholder="Search by module name or user..."
+                placeholder="Search by module name..."
                 className="pl-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             <Button variant="outline">
               <Filter className="mr-2 w-4 h-4" />
               Filters
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" onClick={handleExport}>
               <Download className="mr-2 w-4 h-4" />
               Export
             </Button>
@@ -92,54 +152,102 @@ const History = () => {
 
         {/* Timeline */}
         <div className="space-y-4">
-          {historyData.map((item) => (
-            <Card
-              key={item.id}
-              className="p-6 bg-gradient-card border-border/50 hover:shadow-md transition-all hover:border-primary/30 cursor-pointer"
-            >
-              <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-                <div className="flex-1">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="p-2 bg-primary/10 rounded-lg mt-1">
-                      <Clock className="w-5 h-5 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lg mb-1">{item.module}</h3>
-                      <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                        <span>{item.date} at {item.time}</span>
-                        <span>•</span>
-                        <span>by {item.user}</span>
-                        <span>•</span>
-                        <span>{item.components} components affected</span>
+          {loading ? (
+            Array.from({ length: 5 }).map((_, index) => (
+              <Card
+                key={index}
+                className="p-6 bg-gradient-card border-border/50"
+              >
+                <div className="flex flex-col lg:flex-row lg:items-center gap-4">
+                  <div className="flex-1">
+                    <div className="flex items-start gap-3 mb-3">
+                      <Skeleton className="w-10 h-10 rounded-lg" />
+                      <div className="flex-1 space-y-2">
+                        <Skeleton className="w-64 h-6" />
+                        <Skeleton className="w-48 h-4" />
                       </div>
                     </div>
                   </div>
+                  <div className="flex items-center gap-3">
+                    <Skeleton className="w-24 h-6 rounded-full" />
+                    <Skeleton className="w-24 h-6 rounded-full" />
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
-                      item.risk === "high"
-                        ? "bg-destructive/10 text-destructive"
-                        : item.risk === "medium"
-                        ? "bg-warning/10 text-warning"
-                        : "bg-success/10 text-success"
-                    }`}
-                  >
-                    {item.risk.toUpperCase()} RISK
-                  </span>
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
-                      item.status === "reviewed"
-                        ? "bg-success/10 text-success"
-                        : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {item.status.toUpperCase()}
-                  </span>
-                </div>
-              </div>
+              </Card>
+            ))
+          ) : filteredHistory.length === 0 ? (
+            <Card className="p-12 bg-gradient-card border-border/50 text-center">
+              <p className="text-muted-foreground">
+                No analysis history found. Start a new analysis to see results
+                here.
+              </p>
             </Card>
-          ))}
+          ) : (
+            filteredHistory.map((item) => (
+              <Card
+                key={item.id}
+                className="p-6 bg-gradient-card border-border/50 hover:shadow-md transition-all hover:border-primary/30 cursor-pointer"
+              >
+                <div className="flex flex-col lg:flex-row lg:items-center gap-4">
+                  <div className="flex-1">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="p-2 bg-primary/10 rounded-lg mt-1">
+                        <Clock className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-lg mb-1">
+                          {item.module}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                          <span>{formatTimestamp(item.timestamp)}</span>
+                          <span>•</span>
+                          <span>{item.changeType}</span>
+                          <span>•</span>
+                          <span>
+                            {item.affectedModules} component
+                            {item.affectedModules !== 1 ? "s" : ""} affected
+                          </span>
+                          {item.criticalIssues > 0 && (
+                            <>
+                              <span>•</span>
+                              <span className="text-destructive font-medium">
+                                {item.criticalIssues} critical issue
+                                {item.criticalIssues !== 1 ? "s" : ""}
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
+                        item.impact === "High"
+                          ? "bg-destructive/10 text-destructive"
+                          : item.impact === "Medium"
+                          ? "bg-warning/10 text-warning"
+                          : "bg-success/10 text-success"
+                      }`}
+                    >
+                      {item.impact.toUpperCase()} RISK
+                    </span>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
+                        item.status === "completed"
+                          ? "bg-success/10 text-success"
+                          : item.status === "in-progress"
+                          ? "bg-warning/10 text-warning"
+                          : "bg-destructive/10 text-destructive"
+                      }`}
+                    >
+                      {item.status.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </div>

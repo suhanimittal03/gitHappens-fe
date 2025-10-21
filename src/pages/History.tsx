@@ -3,7 +3,11 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Clock, Search, Filter, Download } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
+import { Clock, Search, Filter, Download, GitCommit, FileCode, AlertTriangle, RotateCw, GitBranch } from "lucide-react";
+import { toast } from "sonner";
 import type { AnalysisHistoryItem } from "@/types";
 
 // Mock data function - Replace with API call
@@ -17,6 +21,43 @@ const getMockHistoryData = (): AnalysisHistoryItem[] => [
     status: "completed",
     affectedModules: 12,
     criticalIssues: 2,
+    commitHash: "a3f8d92",
+    commitMessage: "Updated payment processing logic for new gateway",
+    author: "John Doe",
+    repositoryImpacts: [
+      {
+        repositoryName: "impact-analyzer-backend",
+        riskLevel: "High",
+        summary: "Critical changes to payment processing logic",
+        affectedFiles: [
+          {
+            path: "src/services/payment/gateway.ts",
+            changeType: "modified",
+            linesChanged: 145,
+            impactDescription: "Modified core payment processing logic, affects all payment flows",
+          },
+          {
+            path: "src/api/routes/payment.ts",
+            changeType: "modified",
+            linesChanged: 32,
+            impactDescription: "Updated API endpoints for new gateway integration",
+          },
+        ],
+      },
+      {
+        repositoryName: "impact-analyzer-frontend",
+        riskLevel: "Medium",
+        summary: "UI updates for payment confirmation",
+        affectedFiles: [
+          {
+            path: "src/components/Payment/Confirmation.tsx",
+            changeType: "modified",
+            linesChanged: 28,
+            impactDescription: "Updated payment confirmation display",
+          },
+        ],
+      },
+    ],
   },
   {
     id: "2",
@@ -27,6 +68,24 @@ const getMockHistoryData = (): AnalysisHistoryItem[] => [
     status: "in-progress",
     affectedModules: 7,
     criticalIssues: 0,
+    commitHash: "b7e2c41",
+    commitMessage: "Enhanced authentication flow with MFA support",
+    author: "Jane Smith",
+    repositoryImpacts: [
+      {
+        repositoryName: "impact-analyzer-backend",
+        riskLevel: "Medium",
+        summary: "Authentication service updates",
+        affectedFiles: [
+          {
+            path: "src/services/auth/mfa.ts",
+            changeType: "added",
+            linesChanged: 210,
+            impactDescription: "New MFA implementation module",
+          },
+        ],
+      },
+    ],
   },
   {
     id: "3",
@@ -64,6 +123,12 @@ const History = () => {
   const [historyData, setHistoryData] = useState<AnalysisHistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedItem, setSelectedItem] = useState<AnalysisHistoryItem | null>(null);
+  const [detailDialogOpen, setDetailDialogOpen] = useState(false);
+  const [branchDialogOpen, setBranchDialogOpen] = useState(false);
+  const [selectedBranch, setSelectedBranch] = useState("");
+
+  const branches = ["master", "feature/dev", "release/prod", "develop"];
 
   // TODO: Replace with actual API call
   // Required API endpoint: GET /api/analyses/history?search={query}&limit={limit}
@@ -109,6 +174,23 @@ const History = () => {
     // TODO: Implement export functionality
     // Required API endpoint: GET /api/analyses/export?format=csv
     console.log("Export functionality to be implemented");
+  };
+
+  const handleItemClick = (item: AnalysisHistoryItem) => {
+    setSelectedItem(item);
+    setDetailDialogOpen(true);
+  };
+
+  const handleRetrigger = () => {
+    setBranchDialogOpen(true);
+  };
+
+  const handleRetriggerSubmit = () => {
+    // TODO: Implement retrigger API call
+    // Required API endpoint: POST /api/analyses/retrigger
+    // Request body: { commitId: string, branch: string }
+    toast.success(`Retriggering analysis on branch: ${selectedBranch}`);
+    setBranchDialogOpen(false);
   };
 
   const filteredHistory = historyData.filter((item) =>
@@ -187,26 +269,24 @@ const History = () => {
               <Card
                 key={item.id}
                 className="p-6 bg-gradient-card border-border/50 hover:shadow-md transition-all hover:border-primary/30 cursor-pointer"
+                onClick={() => handleItemClick(item)}
               >
                 <div className="flex flex-col lg:flex-row lg:items-center gap-4">
                   <div className="flex-1">
                     <div className="flex items-start gap-3 mb-3">
                       <div className="p-2 bg-primary/10 rounded-lg mt-1">
-                        <Clock className="w-5 h-5 text-primary" />
+                        <GitCommit className="w-5 h-5 text-primary" />
                       </div>
                       <div className="flex-1">
                         <h3 className="font-semibold text-lg mb-1">
-                          {item.module}
+                          {item.commitMessage || item.module}
                         </h3>
                         <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                          <span className="font-mono">{item.commitHash}</span>
+                          <span>•</span>
+                          <span>{item.author}</span>
+                          <span>•</span>
                           <span>{formatTimestamp(item.timestamp)}</span>
-                          <span>•</span>
-                          <span>{item.changeType}</span>
-                          <span>•</span>
-                          <span>
-                            {item.affectedModules} component
-                            {item.affectedModules !== 1 ? "s" : ""} affected
-                          </span>
                           {item.criticalIssues > 0 && (
                             <>
                               <span>•</span>
@@ -250,6 +330,133 @@ const History = () => {
           )}
         </div>
       </div>
+
+      {/* Detail Dialog */}
+      <Dialog open={detailDialogOpen} onOpenChange={setDetailDialogOpen}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <GitCommit className="w-5 h-5" />
+              {selectedItem?.commitMessage}
+            </DialogTitle>
+            <DialogDescription>
+              <div className="flex items-center gap-3 mt-2">
+                <span className="font-mono text-sm">{selectedItem?.commitHash}</span>
+                <span>•</span>
+                <span>{selectedItem?.author}</span>
+                <span>•</span>
+                <span>{selectedItem?.timestamp && formatTimestamp(selectedItem.timestamp)}</span>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 mt-4">
+            <Accordion type="single" collapsible className="w-full">
+              {selectedItem?.repositoryImpacts?.map((repo, index) => (
+                <AccordionItem key={index} value={`repo-${index}`}>
+                  <AccordionTrigger className="hover:no-underline">
+                    <div className="flex items-center justify-between w-full pr-4">
+                      <div className="flex items-center gap-3">
+                        <GitBranch className="w-5 h-5 text-primary" />
+                        <span className="font-semibold">{repo.repositoryName}</span>
+                      </div>
+                      <Badge
+                        variant="outline"
+                        className={
+                          repo.riskLevel === "High"
+                            ? "bg-destructive/10 text-destructive border-destructive/20"
+                            : repo.riskLevel === "Medium"
+                            ? "bg-warning/10 text-warning border-warning/20"
+                            : "bg-success/10 text-success border-success/20"
+                        }
+                      >
+                        {repo.riskLevel} Risk
+                      </Badge>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-4 pt-4">
+                      <p className="text-sm text-muted-foreground">{repo.summary}</p>
+                      
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-sm flex items-center gap-2">
+                          <FileCode className="w-4 h-4" />
+                          Affected Files
+                        </h4>
+                        {repo.affectedFiles.map((file, fileIndex) => (
+                          <Card key={fileIndex} className="p-4 bg-secondary/30">
+                            <div className="flex items-start justify-between mb-2">
+                              <div className="flex-1">
+                                <code className="text-sm font-mono">{file.path}</code>
+                                <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+                                  <Badge variant="outline" className="text-xs">
+                                    {file.changeType}
+                                  </Badge>
+                                  <span>{file.linesChanged} lines changed</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-start gap-2 mt-3">
+                              <AlertTriangle className="w-4 h-4 text-warning flex-shrink-0 mt-0.5" />
+                              <p className="text-sm">{file.impactDescription}</p>
+                            </div>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+
+          <DialogFooter className="mt-6">
+            <Button variant="outline" onClick={handleRetrigger}>
+              <RotateCw className="w-4 h-4 mr-2" />
+              Retrigger Analysis
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Branch Selection Dialog for Retrigger */}
+      <Dialog open={branchDialogOpen} onOpenChange={setBranchDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Retrigger Impact Analysis</DialogTitle>
+            <DialogDescription>
+              Select a branch to rerun the impact analysis
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2 max-h-[400px] overflow-y-auto">
+            {branches.map((branch) => (
+              <div
+                key={branch}
+                className={`p-3 rounded-lg border cursor-pointer transition-colors ${
+                  selectedBranch === branch
+                    ? "border-primary bg-primary/10"
+                    : "border-border hover:bg-secondary/50"
+                }`}
+                onClick={() => setSelectedBranch(branch)}
+              >
+                <div className="flex items-center gap-2">
+                  <GitBranch className="w-4 h-4 text-muted-foreground" />
+                  <span className="font-mono text-sm">{branch}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setBranchDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleRetriggerSubmit}>
+              <RotateCw className="w-4 h-4 mr-2" />
+              Retrigger
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

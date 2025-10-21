@@ -24,6 +24,7 @@ const Navbar = () => {
     { path: "/analyze", label: "Analyze" },
     { path: "/history", label: "History" },
     { path: "/dependencies", label: "Dependencies" },
+    { path: "/repositories", label: "Repositories" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -75,6 +76,10 @@ const Navbar = () => {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate("/profile")}>
+                    <User className="w-4 h-4 mr-2" />
+                    Profile
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={handleLogout} className="text-destructive">
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
@@ -117,6 +122,17 @@ const Navbar = () => {
                   <p className="text-sm font-semibold">{user.name}</p>
                   <p className="text-xs text-muted-foreground">{user.soeid}</p>
                 </div>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    navigate("/profile");
+                  }}
+                >
+                  <User className="w-4 h-4 mr-2" />
+                  Profile
+                </Button>
                 <Button
                   variant="ghost"
                   className="w-full justify-start text-destructive"

@@ -10,6 +10,8 @@ import Dashboard from "./pages/Dashboard";
 import Analyze from "./pages/Analyze";
 import History from "./pages/History";
 import Dependencies from "./pages/Dependencies";
+import Repositories from "./pages/Repositories";
+import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
@@ -60,6 +62,22 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Dependencies />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/repositories"
+              element={
+                <ProtectedRoute>
+                  <Repositories />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
                 </ProtectedRoute>
               }
             />

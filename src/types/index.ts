@@ -62,6 +62,24 @@ export interface AnalysisHistoryItem {
   status: "completed" | "in-progress" | "failed";
   affectedModules: number;
   criticalIssues: number;
+  commitHash?: string;
+  commitMessage?: string;
+  author?: string;
+  repositoryImpacts?: RepositoryImpact[];
+}
+
+export interface RepositoryImpact {
+  repositoryName: string;
+  affectedFiles: AffectedFile[];
+  riskLevel: "High" | "Medium" | "Low";
+  summary: string;
+}
+
+export interface AffectedFile {
+  path: string;
+  changeType: "modified" | "added" | "deleted";
+  linesChanged: number;
+  impactDescription: string;
 }
 
 // Dependency Graph Types

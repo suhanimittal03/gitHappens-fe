@@ -15,114 +15,147 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import type { DependencyGraphData } from "@/types";
+import graphData from "@/data/dependency_graph.json";
 
-// Mock data function - Replace with API call
-const getMockGraphData = (): DependencyGraphData => ({
-  nodes: [
-    { id: "module-a", label: "Module A", type: "changed", position: { x: 250, y: 0 } },
-    { id: "module-b", label: "Module B", type: "direct", position: { x: 100, y: 150 } },
-    { id: "module-c", label: "Module C", type: "indirect", position: { x: 400, y: 150 } },
-    { id: "service-x", label: "Service X", type: "service", position: { x: 0, y: 300 } },
-    { id: "service-y", label: "Service Y", type: "service", position: { x: 200, y: 300 } },
-    { id: "component-1", label: "Component 1", type: "ui", position: { x: 400, y: 300 } },
-    { id: "component-2", label: "Component 2", type: "ui", position: { x: 550, y: 300 } },
-    { id: "database", label: "Database", type: "database", position: { x: 250, y: 450 } },
-  ],
-  edges: [
-    { source: "module-a", target: "module-b", label: "depends on", type: "changed" },
-    { source: "module-a", target: "module-c", label: "depends on", type: "changed" },
-    { source: "module-b", target: "service-x", label: "calls", type: "direct" },
-    { source: "module-b", target: "service-y", label: "calls", type: "direct" },
-    { source: "module-c", target: "component-1", label: "renders", type: "indirect" },
-    { source: "module-c", target: "component-2", label: "renders", type: "indirect" },
-    { source: "service-x", target: "database", label: "reads from", type: "downstream" },
-    { source: "service-y", target: "database", label: "writes to", type: "downstream" },
-    { source: "component-1", target: "database", label: "queries", type: "downstream" },
-  ],
-});
+// Load graph data
+const getGraphData = async (): Promise<DependencyGraphData> => {
+  // Simulate API delay
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  return graphData as DependencyGraphData;
+};
 
 // Node type styling configuration
 const nodeTypeStyles = {
-  changed: {
+  file: {
     background: "hsl(var(--primary))",
     color: "hsl(var(--primary-foreground))",
     border: "2px solid hsl(var(--primary))",
-    fontWeight: "bold",
   },
-  direct: {
-    background: "hsl(var(--warning))",
-    color: "hsl(var(--warning-foreground))",
-    border: "2px solid hsl(var(--warning))",
-  },
-  indirect: {
+  class: {
     background: "hsl(var(--accent))",
     color: "hsl(var(--accent-foreground))",
     border: "2px solid hsl(var(--accent))",
   },
-  service: {
-    background: "hsl(var(--card))",
-    color: "hsl(var(--foreground))",
-    border: "2px solid hsl(var(--border))",
+  function: {
+    background: "hsl(var(--secondary))",
+    color: "hsl(var(--secondary-foreground))",
+    border: "2px solid hsl(var(--secondary))",
   },
-  ui: {
-    background: "hsl(var(--card))",
-    color: "hsl(var(--foreground))",
-    border: "2px solid hsl(var(--border))",
-  },
-  database: {
+  external: {
     background: "hsl(var(--muted))",
-    color: "hsl(var(--foreground))",
+    color: "hsl(var(--muted-foreground))",
     border: "2px solid hsl(var(--border))",
   },
 };
 
 // Edge type styling configuration
 const edgeTypeStyles = {
-  changed: {
+  contains: {
     stroke: "hsl(var(--primary))",
     strokeWidth: 2,
     animated: true,
   },
-  direct: {
-    stroke: "hsl(var(--warning))",
-    strokeWidth: 2,
-    animated: false,
-  },
-  indirect: {
-    stroke: "hsl(var(--accent))",
-    strokeWidth: 2,
-    animated: false,
-  },
-  downstream: {
+  imports: {
     stroke: "hsl(var(--muted-foreground))",
-    strokeWidth: 1,
+    strokeWidth: 1.5,
     animated: false,
   },
 };
 
-// Transform dependency graph data to ReactFlow format
+// Transform dependency graph data to ReactFlow format with hierarchical layout
 const transformToReactFlow = (data: DependencyGraphData) => {
-  const nodes: Node[] = data.nodes.map((node) => ({
-    id: node.id,
-    type: "default",
-    position: node.position,
-    data: { label: node.label },
-    style: {
-      ...nodeTypeStyles[node.type as keyof typeof nodeTypeStyles],
-      borderRadius: "8px",
-      padding: "10px",
-    },
-  }));
+  // Use a hierarchical layout algorithm
+  const levelMap = new Map<string, number>();
+  const visited = new Set<string>();
+  
+  // Calculate levels using BFS
+  const calculateLevels = () => {
+    const queue: [string, number][] = [];
+    
+    // Start with nodes that have no incoming edges (roots)
+    const incomingCount = new Map<string, number>();
+    data.nodes.forEach(node => incomingCount.set(node.id, 0));
+    data.edges.forEach(edge => {
+      incomingCount.set(edge.target, (incomingCount.get(edge.target) || 0) + 1);
+    });
+    
+    // Find root nodes
+    data.nodes.forEach(node => {
+      if (incomingCount.get(node.id) === 0) {
+        queue.push([node.id, 0]);
+      }
+    });
+    
+    // BFS to calculate levels
+    while (queue.length > 0) {
+      const [nodeId, level] = queue.shift()!;
+      if (visited.has(nodeId)) continue;
+      
+      visited.add(nodeId);
+      levelMap.set(nodeId, level);
+      
+      // Add children
+      data.edges
+        .filter(e => e.source === nodeId)
+        .forEach(edge => {
+          if (!visited.has(edge.target)) {
+            queue.push([edge.target, level + 1]);
+          }
+        });
+    }
+    
+    // Handle any remaining unvisited nodes
+    data.nodes.forEach(node => {
+      if (!levelMap.has(node.id)) {
+        levelMap.set(node.id, 0);
+      }
+    });
+  };
+  
+  calculateLevels();
+  
+  // Group nodes by level
+  const levelGroups = new Map<number, string[]>();
+  levelMap.forEach((level, nodeId) => {
+    if (!levelGroups.has(level)) {
+      levelGroups.set(level, []);
+    }
+    levelGroups.get(level)!.push(nodeId);
+  });
+  
+  // Position nodes
+  const nodes: Node[] = data.nodes.map((node) => {
+    const level = levelMap.get(node.id) || 0;
+    const nodesInLevel = levelGroups.get(level) || [];
+    const indexInLevel = nodesInLevel.indexOf(node.id);
+    const totalInLevel = nodesInLevel.length;
+    
+    return {
+      id: node.id,
+      type: "default",
+      data: { label: node.label },
+      position: {
+        x: (indexInLevel - totalInLevel / 2) * 250 + 400,
+        y: level * 120,
+      },
+      style: {
+        ...nodeTypeStyles[node.type as keyof typeof nodeTypeStyles],
+        borderRadius: "8px",
+        padding: "10px",
+      },
+    };
+  });
 
   const edges: Edge[] = data.edges.map((edge, index) => {
-    const edgeStyle = edgeTypeStyles[edge.type as keyof typeof edgeTypeStyles];
+    const edgeStyle = edgeTypeStyles[edge.relation as keyof typeof edgeTypeStyles];
     return {
       id: `edge-${index}`,
       source: edge.source,
       target: edge.target,
-      label: edge.label,
+      label: edge.relation,
       style: { stroke: edgeStyle.stroke, strokeWidth: edgeStyle.strokeWidth },
       animated: edgeStyle.animated,
+      type: "smoothstep",
     };
   });
 
@@ -133,21 +166,12 @@ const Dependencies = () => {
   const [graphData, setGraphData] = useState<DependencyGraphData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // TODO: Replace with actual API call
-  // Required API endpoint: GET /api/dependencies/graph?moduleId={id}
-  // Response: DependencyGraphData
   useEffect(() => {
     const fetchGraphData = async () => {
       setLoading(true);
       try {
-        // Simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 800));
-
-        // TODO: Replace with actual API call:
-        // const response = await fetch('/api/dependencies/graph');
-        // const data = await response.json();
-
-        setGraphData(getMockGraphData());
+        const data = await getGraphData();
+        setGraphData(data);
       } catch (error) {
         console.error("Failed to fetch graph data:", error);
       } finally {
@@ -230,14 +254,14 @@ const Dependencies = () => {
               </div>
             ) : (
               <ReactFlow
-              nodes={nodes}
-              edges={edges}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              fitView
-              attributionPosition="bottom-left"
-            >
-              <Controls />
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                fitView
+                attributionPosition="bottom-left"
+              >
+                <Controls />
                 <MiniMap
                   nodeColor={(node) => {
                     if (!graphData) return "hsl(var(--muted))";
@@ -264,19 +288,19 @@ const Dependencies = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="flex items-center gap-3">
               <div className="w-4 h-4 rounded-full bg-primary"></div>
-              <span className="text-sm">Changed Module</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-4 h-4 rounded-full bg-warning"></div>
-              <span className="text-sm">Direct Dependency</span>
+              <span className="text-sm">File</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-4 h-4 rounded-full bg-accent"></div>
-              <span className="text-sm">Indirect Dependency</span>
+              <span className="text-sm">Class</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-4 h-4 rounded-full bg-secondary"></div>
+              <span className="text-sm">Function</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-4 h-4 rounded-full bg-muted"></div>
-              <span className="text-sm">Downstream Impact</span>
+              <span className="text-sm">External Module</span>
             </div>
           </div>
         </Card>

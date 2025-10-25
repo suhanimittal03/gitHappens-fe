@@ -86,15 +86,15 @@ export interface AffectedFile {
 export interface GraphNode {
   id: string;
   label: string;
-  type: "changed" | "direct" | "indirect" | "service" | "ui" | "database";
-  position: { x: number; y: number };
+  type: "file" | "class" | "function" | "external";
+  path?: string;
+  file?: string;
 }
 
 export interface GraphEdge {
   source: string;
   target: string;
-  label: string;
-  type: "changed" | "direct" | "indirect" | "downstream";
+  relation: "contains" | "imports";
 }
 
 export interface DependencyGraphData {

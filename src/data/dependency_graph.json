@@ -1,0 +1,1009 @@
+{
+  "nodes": [
+    {
+      "id": "file:carfactory.py",
+      "type": "file",
+      "label": "carfactory.py",
+      "path": "carfactory.py"
+    },
+    {
+      "id": "file:car.py",
+      "type": "file",
+      "label": "car.py",
+      "path": "car.py"
+    },
+    {
+      "id": "file:utils.py",
+      "type": "file",
+      "label": "utils.py",
+      "path": "utils.py"
+    },
+    {
+      "id": "file:serviceable.py",
+      "type": "file",
+      "label": "serviceable.py",
+      "path": "serviceable.py"
+    },
+    {
+      "id": "file:test/__init__.py",
+      "type": "file",
+      "label": "test/__init__.py",
+      "path": "test/__init__.py"
+    },
+    {
+      "id": "file:tires/carrigan_tires.py",
+      "type": "file",
+      "label": "tires/carrigan_tires.py",
+      "path": "tires/carrigan_tires.py"
+    },
+    {
+      "id": "file:tires/octoprime_tires.py",
+      "type": "file",
+      "label": "tires/octoprime_tires.py",
+      "path": "tires/octoprime_tires.py"
+    },
+    {
+      "id": "file:tires/tire.py",
+      "type": "file",
+      "label": "tires/tire.py",
+      "path": "tires/tire.py"
+    },
+    {
+      "id": "file:battery/battery.py",
+      "type": "file",
+      "label": "battery/battery.py",
+      "path": "battery/battery.py"
+    },
+    {
+      "id": "file:battery/nubbin_battery.py",
+      "type": "file",
+      "label": "battery/nubbin_battery.py",
+      "path": "battery/nubbin_battery.py"
+    },
+    {
+      "id": "file:battery/spindler_battery.py",
+      "type": "file",
+      "label": "battery/spindler_battery.py",
+      "path": "battery/spindler_battery.py"
+    },
+    {
+      "id": "file:engine/willoughby_engine.py",
+      "type": "file",
+      "label": "engine/willoughby_engine.py",
+      "path": "engine/willoughby_engine.py"
+    },
+    {
+      "id": "file:engine/__init__.py",
+      "type": "file",
+      "label": "engine/__init__.py",
+      "path": "engine/__init__.py"
+    },
+    {
+      "id": "file:engine/engine.py",
+      "type": "file",
+      "label": "engine/engine.py",
+      "path": "engine/engine.py"
+    },
+    {
+      "id": "file:engine/capulet_engine.py",
+      "type": "file",
+      "label": "engine/capulet_engine.py",
+      "path": "engine/capulet_engine.py"
+    },
+    {
+      "id": "file:engine/sternman_engine.py",
+      "type": "file",
+      "label": "engine/sternman_engine.py",
+      "path": "engine/sternman_engine.py"
+    },
+    {
+      "id": "file:test/test_tires/test_octoprime_tires.py",
+      "type": "file",
+      "label": "test/test_tires/test_octoprime_tires.py",
+      "path": "test/test_tires/test_octoprime_tires.py"
+    },
+    {
+      "id": "file:test/test_tires/test_carrigan_tires.py",
+      "type": "file",
+      "label": "test/test_tires/test_carrigan_tires.py",
+      "path": "test/test_tires/test_carrigan_tires.py"
+    },
+    {
+      "id": "file:test/test_engine/test_capulet_engine.py",
+      "type": "file",
+      "label": "test/test_engine/test_capulet_engine.py",
+      "path": "test/test_engine/test_capulet_engine.py"
+    },
+    {
+      "id": "file:test/test_engine/test_sternman_engine.py",
+      "type": "file",
+      "label": "test/test_engine/test_sternman_engine.py",
+      "path": "test/test_engine/test_sternman_engine.py"
+    },
+    {
+      "id": "file:test/test_engine/test_willoughby_engine.py",
+      "type": "file",
+      "label": "test/test_engine/test_willoughby_engine.py",
+      "path": "test/test_engine/test_willoughby_engine.py"
+    },
+    {
+      "id": "file:test/test_battery/test_spindler_battery.py",
+      "type": "file",
+      "label": "test/test_battery/test_spindler_battery.py",
+      "path": "test/test_battery/test_spindler_battery.py"
+    },
+    {
+      "id": "file:test/test_battery/test_nubbin_battery.py",
+      "type": "file",
+      "label": "test/test_battery/test_nubbin_battery.py",
+      "path": "test/test_battery/test_nubbin_battery.py"
+    },
+    {
+      "id": "file:carfactory.py::class:CarFactory",
+      "type": "class",
+      "label": "CarFactory",
+      "file": "carfactory.py"
+    },
+    {
+      "id": "file:carfactory.py::func:create_calliope",
+      "type": "function",
+      "label": "create_calliope",
+      "file": "carfactory.py"
+    },
+    {
+      "id": "file:carfactory.py::func:create_glissade",
+      "type": "function",
+      "label": "create_glissade",
+      "file": "carfactory.py"
+    },
+    {
+      "id": "file:carfactory.py::func:create_pallindrome",
+      "type": "function",
+      "label": "create_pallindrome",
+      "file": "carfactory.py"
+    },
+    {
+      "id": "file:carfactory.py::func:create_rorschach",
+      "type": "function",
+      "label": "create_rorschach",
+      "file": "carfactory.py"
+    },
+    {
+      "id": "file:carfactory.py::func:create_thovex",
+      "type": "function",
+      "label": "create_thovex",
+      "file": "carfactory.py"
+    },
+    {
+      "id": "external:tires",
+      "type": "external",
+      "label": "tires"
+    },
+    {
+      "id": "file:car.py::class:Car",
+      "type": "class",
+      "label": "Car",
+      "file": "car.py"
+    },
+    {
+      "id": "file:car.py::func:__init__",
+      "type": "function",
+      "label": "__init__",
+      "file": "car.py"
+    },
+    {
+      "id": "file:car.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "car.py"
+    },
+    {
+      "id": "file:utils.py::func:add_years_to_date",
+      "type": "function",
+      "label": "add_years_to_date",
+      "file": "utils.py"
+    },
+    {
+      "id": "file:serviceable.py::class:Serviceable",
+      "type": "class",
+      "label": "Serviceable",
+      "file": "serviceable.py"
+    },
+    {
+      "id": "file:serviceable.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "serviceable.py"
+    },
+    {
+      "id": "external:abc",
+      "type": "external",
+      "label": "abc"
+    },
+    {
+      "id": "file:tires/carrigan_tires.py::class:CarriganTires",
+      "type": "class",
+      "label": "CarriganTires",
+      "file": "carrigan_tires.py"
+    },
+    {
+      "id": "file:tires/carrigan_tires.py::func:__init__",
+      "type": "function",
+      "label": "__init__",
+      "file": "carrigan_tires.py"
+    },
+    {
+      "id": "file:tires/carrigan_tires.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "carrigan_tires.py"
+    },
+    {
+      "id": "file:tires/octoprime_tires.py::class:OctoprimeTires",
+      "type": "class",
+      "label": "OctoprimeTires",
+      "file": "octoprime_tires.py"
+    },
+    {
+      "id": "file:tires/octoprime_tires.py::func:__init__",
+      "type": "function",
+      "label": "__init__",
+      "file": "octoprime_tires.py"
+    },
+    {
+      "id": "file:tires/octoprime_tires.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "octoprime_tires.py"
+    },
+    {
+      "id": "file:tires/tire.py::class:Tires",
+      "type": "class",
+      "label": "Tires",
+      "file": "tire.py"
+    },
+    {
+      "id": "file:tires/tire.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "tire.py"
+    },
+    {
+      "id": "file:battery/battery.py::class:Battery",
+      "type": "class",
+      "label": "Battery",
+      "file": "battery.py"
+    },
+    {
+      "id": "file:battery/battery.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "battery.py"
+    },
+    {
+      "id": "file:battery/nubbin_battery.py::class:NubbinBattery",
+      "type": "class",
+      "label": "NubbinBattery",
+      "file": "nubbin_battery.py"
+    },
+    {
+      "id": "file:battery/nubbin_battery.py::func:__init__",
+      "type": "function",
+      "label": "__init__",
+      "file": "nubbin_battery.py"
+    },
+    {
+      "id": "file:battery/nubbin_battery.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "nubbin_battery.py"
+    },
+    {
+      "id": "file:battery/spindler_battery.py::class:SpindlerBattery",
+      "type": "class",
+      "label": "SpindlerBattery",
+      "file": "spindler_battery.py"
+    },
+    {
+      "id": "file:battery/spindler_battery.py::func:__init__",
+      "type": "function",
+      "label": "__init__",
+      "file": "spindler_battery.py"
+    },
+    {
+      "id": "file:battery/spindler_battery.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "spindler_battery.py"
+    },
+    {
+      "id": "file:engine/willoughby_engine.py::class:WilloughbyEngine",
+      "type": "class",
+      "label": "WilloughbyEngine",
+      "file": "willoughby_engine.py"
+    },
+    {
+      "id": "file:engine/willoughby_engine.py::func:__init__",
+      "type": "function",
+      "label": "__init__",
+      "file": "willoughby_engine.py"
+    },
+    {
+      "id": "file:engine/willoughby_engine.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "willoughby_engine.py"
+    },
+    {
+      "id": "file:engine/engine.py::class:Engine",
+      "type": "class",
+      "label": "Engine",
+      "file": "engine.py"
+    },
+    {
+      "id": "file:engine/engine.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "engine.py"
+    },
+    {
+      "id": "file:engine/capulet_engine.py::class:CapuletEngine",
+      "type": "class",
+      "label": "CapuletEngine",
+      "file": "capulet_engine.py"
+    },
+    {
+      "id": "file:engine/capulet_engine.py::func:__init__",
+      "type": "function",
+      "label": "__init__",
+      "file": "capulet_engine.py"
+    },
+    {
+      "id": "file:engine/capulet_engine.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "capulet_engine.py"
+    },
+    {
+      "id": "file:engine/sternman_engine.py::class:SternmanEngine",
+      "type": "class",
+      "label": "SternmanEngine",
+      "file": "sternman_engine.py"
+    },
+    {
+      "id": "file:engine/sternman_engine.py::func:__init__",
+      "type": "function",
+      "label": "__init__",
+      "file": "sternman_engine.py"
+    },
+    {
+      "id": "file:engine/sternman_engine.py::func:needs_service",
+      "type": "function",
+      "label": "needs_service",
+      "file": "sternman_engine.py"
+    },
+    {
+      "id": "file:test/test_tires/test_octoprime_tires.py::class:TestCarriganTires",
+      "type": "class",
+      "label": "TestCarriganTires",
+      "file": "test_octoprime_tires.py"
+    },
+    {
+      "id": "file:test/test_tires/test_octoprime_tires.py::func:test_tires_should_be_serviced",
+      "type": "function",
+      "label": "test_tires_should_be_serviced",
+      "file": "test_octoprime_tires.py"
+    },
+    {
+      "id": "file:test/test_tires/test_octoprime_tires.py::func:test_tires_should_not_be_serviced",
+      "type": "function",
+      "label": "test_tires_should_not_be_serviced",
+      "file": "test_octoprime_tires.py"
+    },
+    {
+      "id": "external:unittest",
+      "type": "external",
+      "label": "unittest"
+    },
+    {
+      "id": "external:numpy",
+      "type": "external",
+      "label": "numpy"
+    },
+    {
+      "id": "file:test/test_tires/test_carrigan_tires.py::class:TestCarriganTires",
+      "type": "class",
+      "label": "TestCarriganTires",
+      "file": "test_carrigan_tires.py"
+    },
+    {
+      "id": "file:test/test_tires/test_carrigan_tires.py::func:test_tires_should_be_serviced",
+      "type": "function",
+      "label": "test_tires_should_be_serviced",
+      "file": "test_carrigan_tires.py"
+    },
+    {
+      "id": "file:test/test_tires/test_carrigan_tires.py::func:test_tires_should_not_be_serviced",
+      "type": "function",
+      "label": "test_tires_should_not_be_serviced",
+      "file": "test_carrigan_tires.py"
+    },
+    {
+      "id": "file:test/test_engine/test_capulet_engine.py::class:TestCapuletEngine",
+      "type": "class",
+      "label": "TestCapuletEngine",
+      "file": "test_capulet_engine.py"
+    },
+    {
+      "id": "file:test/test_engine/test_capulet_engine.py::func:test_engine_should_be_serviced",
+      "type": "function",
+      "label": "test_engine_should_be_serviced",
+      "file": "test_capulet_engine.py"
+    },
+    {
+      "id": "file:test/test_engine/test_capulet_engine.py::func:test_engine_should_not_be_serviced",
+      "type": "function",
+      "label": "test_engine_should_not_be_serviced",
+      "file": "test_capulet_engine.py"
+    },
+    {
+      "id": "file:test/test_engine/test_sternman_engine.py::class:TestSternmanEngine",
+      "type": "class",
+      "label": "TestSternmanEngine",
+      "file": "test_sternman_engine.py"
+    },
+    {
+      "id": "file:test/test_engine/test_sternman_engine.py::func:test_engine_should_be_serviced",
+      "type": "function",
+      "label": "test_engine_should_be_serviced",
+      "file": "test_sternman_engine.py"
+    },
+    {
+      "id": "file:test/test_engine/test_sternman_engine.py::func:test_engine_should_not_be_serviced",
+      "type": "function",
+      "label": "test_engine_should_not_be_serviced",
+      "file": "test_sternman_engine.py"
+    },
+    {
+      "id": "file:test/test_engine/test_willoughby_engine.py::class:TestWilloughbyEngine",
+      "type": "class",
+      "label": "TestWilloughbyEngine",
+      "file": "test_willoughby_engine.py"
+    },
+    {
+      "id": "file:test/test_engine/test_willoughby_engine.py::func:test_engine_should_be_serviced",
+      "type": "function",
+      "label": "test_engine_should_be_serviced",
+      "file": "test_willoughby_engine.py"
+    },
+    {
+      "id": "file:test/test_engine/test_willoughby_engine.py::func:test_engine_should_not_be_serviced",
+      "type": "function",
+      "label": "test_engine_should_not_be_serviced",
+      "file": "test_willoughby_engine.py"
+    },
+    {
+      "id": "file:test/test_battery/test_spindler_battery.py::class:TestNubbinBattery",
+      "type": "class",
+      "label": "TestNubbinBattery",
+      "file": "test_spindler_battery.py"
+    },
+    {
+      "id": "file:test/test_battery/test_spindler_battery.py::func:test_battery_should_be_serviced",
+      "type": "function",
+      "label": "test_battery_should_be_serviced",
+      "file": "test_spindler_battery.py"
+    },
+    {
+      "id": "file:test/test_battery/test_spindler_battery.py::func:test_battery_should_not_be_serviced",
+      "type": "function",
+      "label": "test_battery_should_not_be_serviced",
+      "file": "test_spindler_battery.py"
+    },
+    {
+      "id": "external:datetime",
+      "type": "external",
+      "label": "datetime"
+    },
+    {
+      "id": "file:test/test_battery/test_nubbin_battery.py::class:TestNubbinBattery",
+      "type": "class",
+      "label": "TestNubbinBattery",
+      "file": "test_nubbin_battery.py"
+    },
+    {
+      "id": "file:test/test_battery/test_nubbin_battery.py::func:test_battery_should_be_serviced",
+      "type": "function",
+      "label": "test_battery_should_be_serviced",
+      "file": "test_nubbin_battery.py"
+    },
+    {
+      "id": "file:test/test_battery/test_nubbin_battery.py::func:test_battery_should_not_be_serviced",
+      "type": "function",
+      "label": "test_battery_should_not_be_serviced",
+      "file": "test_nubbin_battery.py"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:carfactory.py",
+      "target": "file:carfactory.py::class:CarFactory",
+      "relation": "contains"
+    },
+    {
+      "source": "file:carfactory.py",
+      "target": "file:carfactory.py::func:create_calliope",
+      "relation": "contains"
+    },
+    {
+      "source": "file:carfactory.py",
+      "target": "file:carfactory.py::func:create_glissade",
+      "relation": "contains"
+    },
+    {
+      "source": "file:carfactory.py",
+      "target": "file:carfactory.py::func:create_pallindrome",
+      "relation": "contains"
+    },
+    {
+      "source": "file:carfactory.py",
+      "target": "file:carfactory.py::func:create_rorschach",
+      "relation": "contains"
+    },
+    {
+      "source": "file:carfactory.py",
+      "target": "file:carfactory.py::func:create_thovex",
+      "relation": "contains"
+    },
+    {
+      "source": "file:carfactory.py",
+      "target": "file:battery/battery.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:carfactory.py",
+      "target": "file:car.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:carfactory.py",
+      "target": "external:tires",
+      "relation": "imports"
+    },
+    {
+      "source": "file:carfactory.py",
+      "target": "file:engine/engine.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:car.py",
+      "target": "file:car.py::class:Car",
+      "relation": "contains"
+    },
+    {
+      "source": "file:car.py",
+      "target": "file:car.py::func:__init__",
+      "relation": "contains"
+    },
+    {
+      "source": "file:car.py",
+      "target": "file:car.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:car.py",
+      "target": "file:serviceable.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:utils.py",
+      "target": "file:utils.py::func:add_years_to_date",
+      "relation": "contains"
+    },
+    {
+      "source": "file:serviceable.py",
+      "target": "file:serviceable.py::class:Serviceable",
+      "relation": "contains"
+    },
+    {
+      "source": "file:serviceable.py",
+      "target": "file:serviceable.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:serviceable.py",
+      "target": "external:abc",
+      "relation": "imports"
+    },
+    {
+      "source": "file:tires/carrigan_tires.py",
+      "target": "file:tires/carrigan_tires.py::class:CarriganTires",
+      "relation": "contains"
+    },
+    {
+      "source": "file:tires/carrigan_tires.py",
+      "target": "file:tires/carrigan_tires.py::func:__init__",
+      "relation": "contains"
+    },
+    {
+      "source": "file:tires/carrigan_tires.py",
+      "target": "file:tires/carrigan_tires.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:tires/carrigan_tires.py",
+      "target": "external:tires",
+      "relation": "imports"
+    },
+    {
+      "source": "file:tires/octoprime_tires.py",
+      "target": "file:tires/octoprime_tires.py::class:OctoprimeTires",
+      "relation": "contains"
+    },
+    {
+      "source": "file:tires/octoprime_tires.py",
+      "target": "file:tires/octoprime_tires.py::func:__init__",
+      "relation": "contains"
+    },
+    {
+      "source": "file:tires/octoprime_tires.py",
+      "target": "file:tires/octoprime_tires.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:tires/octoprime_tires.py",
+      "target": "external:tires",
+      "relation": "imports"
+    },
+    {
+      "source": "file:tires/tire.py",
+      "target": "file:tires/tire.py::class:Tires",
+      "relation": "contains"
+    },
+    {
+      "source": "file:tires/tire.py",
+      "target": "file:tires/tire.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:tires/tire.py",
+      "target": "external:abc",
+      "relation": "imports"
+    },
+    {
+      "source": "file:battery/battery.py",
+      "target": "file:battery/battery.py::class:Battery",
+      "relation": "contains"
+    },
+    {
+      "source": "file:battery/battery.py",
+      "target": "file:battery/battery.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:battery/battery.py",
+      "target": "external:abc",
+      "relation": "imports"
+    },
+    {
+      "source": "file:battery/nubbin_battery.py",
+      "target": "file:battery/nubbin_battery.py::class:NubbinBattery",
+      "relation": "contains"
+    },
+    {
+      "source": "file:battery/nubbin_battery.py",
+      "target": "file:battery/nubbin_battery.py::func:__init__",
+      "relation": "contains"
+    },
+    {
+      "source": "file:battery/nubbin_battery.py",
+      "target": "file:battery/nubbin_battery.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:battery/nubbin_battery.py",
+      "target": "file:utils.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:battery/nubbin_battery.py",
+      "target": "file:battery/battery.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:battery/spindler_battery.py",
+      "target": "file:battery/spindler_battery.py::class:SpindlerBattery",
+      "relation": "contains"
+    },
+    {
+      "source": "file:battery/spindler_battery.py",
+      "target": "file:battery/spindler_battery.py::func:__init__",
+      "relation": "contains"
+    },
+    {
+      "source": "file:battery/spindler_battery.py",
+      "target": "file:battery/spindler_battery.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:battery/spindler_battery.py",
+      "target": "file:utils.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:battery/spindler_battery.py",
+      "target": "file:battery/battery.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:engine/willoughby_engine.py",
+      "target": "file:engine/willoughby_engine.py::class:WilloughbyEngine",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/willoughby_engine.py",
+      "target": "file:engine/willoughby_engine.py::func:__init__",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/willoughby_engine.py",
+      "target": "file:engine/willoughby_engine.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/willoughby_engine.py",
+      "target": "file:engine/engine.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:engine/engine.py",
+      "target": "file:engine/engine.py::class:Engine",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/engine.py",
+      "target": "file:engine/engine.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/engine.py",
+      "target": "external:abc",
+      "relation": "imports"
+    },
+    {
+      "source": "file:engine/capulet_engine.py",
+      "target": "file:engine/capulet_engine.py::class:CapuletEngine",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/capulet_engine.py",
+      "target": "file:engine/capulet_engine.py::func:__init__",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/capulet_engine.py",
+      "target": "file:engine/capulet_engine.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/capulet_engine.py",
+      "target": "file:engine/engine.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:engine/sternman_engine.py",
+      "target": "file:engine/sternman_engine.py::class:SternmanEngine",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/sternman_engine.py",
+      "target": "file:engine/sternman_engine.py::func:__init__",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/sternman_engine.py",
+      "target": "file:engine/sternman_engine.py::func:needs_service",
+      "relation": "contains"
+    },
+    {
+      "source": "file:engine/sternman_engine.py",
+      "target": "file:engine/engine.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_tires/test_octoprime_tires.py",
+      "target": "file:test/test_tires/test_octoprime_tires.py::class:TestCarriganTires",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_tires/test_octoprime_tires.py",
+      "target": "file:test/test_tires/test_octoprime_tires.py::func:test_tires_should_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_tires/test_octoprime_tires.py",
+      "target": "file:test/test_tires/test_octoprime_tires.py::func:test_tires_should_not_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_tires/test_octoprime_tires.py",
+      "target": "external:unittest",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_tires/test_octoprime_tires.py",
+      "target": "external:numpy",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_tires/test_octoprime_tires.py",
+      "target": "external:tires",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_tires/test_carrigan_tires.py",
+      "target": "file:test/test_tires/test_carrigan_tires.py::class:TestCarriganTires",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_tires/test_carrigan_tires.py",
+      "target": "file:test/test_tires/test_carrigan_tires.py::func:test_tires_should_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_tires/test_carrigan_tires.py",
+      "target": "file:test/test_tires/test_carrigan_tires.py::func:test_tires_should_not_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_tires/test_carrigan_tires.py",
+      "target": "external:unittest",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_tires/test_carrigan_tires.py",
+      "target": "external:numpy",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_tires/test_carrigan_tires.py",
+      "target": "external:tires",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_engine/test_capulet_engine.py",
+      "target": "file:test/test_engine/test_capulet_engine.py::class:TestCapuletEngine",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_engine/test_capulet_engine.py",
+      "target": "file:test/test_engine/test_capulet_engine.py::func:test_engine_should_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_engine/test_capulet_engine.py",
+      "target": "file:test/test_engine/test_capulet_engine.py::func:test_engine_should_not_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_engine/test_capulet_engine.py",
+      "target": "external:unittest",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_engine/test_capulet_engine.py",
+      "target": "file:engine/engine.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_engine/test_sternman_engine.py",
+      "target": "file:test/test_engine/test_sternman_engine.py::class:TestSternmanEngine",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_engine/test_sternman_engine.py",
+      "target": "file:test/test_engine/test_sternman_engine.py::func:test_engine_should_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_engine/test_sternman_engine.py",
+      "target": "file:test/test_engine/test_sternman_engine.py::func:test_engine_should_not_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_engine/test_sternman_engine.py",
+      "target": "external:unittest",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_engine/test_sternman_engine.py",
+      "target": "file:engine/engine.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_engine/test_willoughby_engine.py",
+      "target": "file:test/test_engine/test_willoughby_engine.py::class:TestWilloughbyEngine",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_engine/test_willoughby_engine.py",
+      "target": "file:test/test_engine/test_willoughby_engine.py::func:test_engine_should_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_engine/test_willoughby_engine.py",
+      "target": "file:test/test_engine/test_willoughby_engine.py::func:test_engine_should_not_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_engine/test_willoughby_engine.py",
+      "target": "external:unittest",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_engine/test_willoughby_engine.py",
+      "target": "file:engine/engine.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_battery/test_spindler_battery.py",
+      "target": "file:test/test_battery/test_spindler_battery.py::class:TestNubbinBattery",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_battery/test_spindler_battery.py",
+      "target": "file:test/test_battery/test_spindler_battery.py::func:test_battery_should_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_battery/test_spindler_battery.py",
+      "target": "file:test/test_battery/test_spindler_battery.py::func:test_battery_should_not_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_battery/test_spindler_battery.py",
+      "target": "external:unittest",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_battery/test_spindler_battery.py",
+      "target": "file:battery/battery.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_battery/test_spindler_battery.py",
+      "target": "external:datetime",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_battery/test_nubbin_battery.py",
+      "target": "file:test/test_battery/test_nubbin_battery.py::class:TestNubbinBattery",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_battery/test_nubbin_battery.py",
+      "target": "file:test/test_battery/test_nubbin_battery.py::func:test_battery_should_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_battery/test_nubbin_battery.py",
+      "target": "file:test/test_battery/test_nubbin_battery.py::func:test_battery_should_not_be_serviced",
+      "relation": "contains"
+    },
+    {
+      "source": "file:test/test_battery/test_nubbin_battery.py",
+      "target": "external:unittest",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_battery/test_nubbin_battery.py",
+      "target": "file:battery/battery.py",
+      "relation": "imports"
+    },
+    {
+      "source": "file:test/test_battery/test_nubbin_battery.py",
+      "target": "external:datetime",
+      "relation": "imports"
+    }
+  ]
+}
